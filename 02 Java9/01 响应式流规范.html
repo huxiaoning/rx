@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>RxJava · 响应式编程</title>
+        <title>响应式流规范 · 响应式编程</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -70,10 +70,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="01 响应式流规范.html" />
+    <link rel="next" href="../03 Project Reactor/" />
     
     
-    <link rel="prev" href="../" />
+    <link rel="prev" href="./" />
     
 
     <style>
@@ -126,9 +126,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="./">
+        <li class="chapter " data-level="1.2" data-path="../01 RxJava/">
             
-                <a href="./">
+                <a href="../01 RxJava/">
             
                     
                     RxJava
@@ -140,9 +140,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="01 响应式流规范.html">
+        <li class="chapter " data-level="1.2.1" data-path="../01 RxJava/01 响应式流规范.html">
             
-                <a href="01 响应式流规范.html">
+                <a href="../01 RxJava/01 响应式流规范.html">
             
                     
                     响应式流规范
@@ -158,9 +158,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="../02 Java9/">
+        <li class="chapter " data-level="1.3" data-path="./">
             
-                <a href="../02 Java9/">
+                <a href="./">
             
                     
                     Java9
@@ -172,9 +172,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../02 Java9/01 响应式流规范.html">
+        <li class="chapter active" data-level="1.3.1" data-path="01 响应式流规范.html">
             
-                <a href="../02 Java9/01 响应式流规范.html">
+                <a href="01 响应式流规范.html">
             
                     
                     响应式流规范
@@ -233,7 +233,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >RxJava</a>
+        <a href=".." >响应式流规范</a>
     </h1>
 </div>
 
@@ -248,7 +248,32 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="rxjava">RxJava</h1>
+                                <h1 id="&#x54CD;&#x5E94;&#x5F0F;&#x6D41;&#x89C4;&#x8303;">&#x54CD;&#x5E94;&#x5F0F;&#x6D41;&#x89C4;&#x8303;</h1>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> java.util.concurrent;
+<span class="hljs-comment">/*
+ * @author Doug Lea
+ * @since 9
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Flow</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Flow</span><span class="hljs-params">()</span> </span>{} <span class="hljs-comment">// uninstantiable</span>
+    <span class="hljs-meta">@FunctionalInterface</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Publisher</span>&lt;<span class="hljs-title">T</span>&gt; </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">subscribe</span><span class="hljs-params">(Subscriber&lt;? <span class="hljs-keyword">super</span> T&gt; subscriber)</span></span>;
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Subscriber</span>&lt;<span class="hljs-title">T</span>&gt; </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onSubscribe</span><span class="hljs-params">(Subscription subscription)</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onNext</span><span class="hljs-params">(T item)</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onError</span><span class="hljs-params">(Throwable throwable)</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onComplete</span><span class="hljs-params">()</span></span>;
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Subscription</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">request</span><span class="hljs-params">(<span class="hljs-keyword">long</span> n)</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">cancel</span><span class="hljs-params">()</span></span>;
+    }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processor</span>&lt;<span class="hljs-title">T</span>,<span class="hljs-title">R</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Subscriber</span>&lt;<span class="hljs-title">T</span>&gt;, <span class="hljs-title">Publisher</span>&lt;<span class="hljs-title">R</span>&gt; </span>{
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -276,12 +301,12 @@
 
             
                 
-                <a href="../" class="navigation navigation-prev " aria-label="Previous page: 响应式编程">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Java9">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="01 响应式流规范.html" class="navigation navigation-next " aria-label="Next page: 响应式流规范">
+                <a href="../03 Project Reactor/" class="navigation navigation-next " aria-label="Next page: Project Reactor">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -292,7 +317,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"RxJava","level":"1.2","depth":1,"next":{"title":"响应式流规范","level":"1.2.1","depth":2,"path":"01 RxJava/01 响应式流规范.md","ref":"01 RxJava/01 响应式流规范.md","articles":[]},"previous":{"title":"响应式编程","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["donate","github-buttons@2.1.0","edit-link","toggle-chapters","code"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"donate":{"alipay":"https://raw.githubusercontent.com/huxiaoning/img/master/alipay.jpg","alipayText":"支付宝打赏","button":"打赏","title":"","wechat":"https://raw.githubusercontent.com/huxiaoning/img/master/wechatpay.jpg","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"github-buttons":{"repo":"huxiaoning/rx","types":["star"],"size":"small"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"编辑此页面","base":"https://github.com/huxiaoning/rx/edit/main"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"theme":"default","author":"Jett","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"响应式编程","language":"zh-hans","gitbook":"*","description":"响应式编程"},"file":{"path":"01 RxJava/README.md","mtime":"2022-12-21T05:27:42.717Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-12-21T05:28:28.796Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"响应式流规范","level":"1.3.1","depth":2,"next":{"title":"Project Reactor","level":"1.4","depth":1,"path":"03 Project Reactor/README.md","ref":"03 Project Reactor/README.md","articles":[]},"previous":{"title":"Java9","level":"1.3","depth":1,"path":"02 Java9/README.md","ref":"02 Java9/README.md","articles":[{"title":"响应式流规范","level":"1.3.1","depth":2,"path":"02 Java9/01 响应式流规范.md","ref":"02 Java9/01 响应式流规范.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["donate","github-buttons@2.1.0","edit-link","toggle-chapters","code"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"donate":{"alipay":"https://raw.githubusercontent.com/huxiaoning/img/master/alipay.jpg","alipayText":"支付宝打赏","button":"打赏","title":"","wechat":"https://raw.githubusercontent.com/huxiaoning/img/master/wechatpay.jpg","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"github-buttons":{"repo":"huxiaoning/rx","types":["star"],"size":"small"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"编辑此页面","base":"https://github.com/huxiaoning/rx/edit/main"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"theme":"default","author":"Jett","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"响应式编程","language":"zh-hans","gitbook":"*","description":"响应式编程"},"file":{"path":"02 Java9/01 响应式流规范.md","mtime":"2022-12-21T05:27:42.717Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-12-21T05:28:28.796Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
